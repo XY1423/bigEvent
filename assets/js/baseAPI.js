@@ -23,4 +23,14 @@ $.ajaxPrefilter(function(options) {
       location.href = '/login.html'
     }
   }
+  const opSuccess = options.success
+  options.success = function(res) {
+  const {message,status} = res
+
+    opSuccess(res)
+    if (status === 1 && message === '身份认证失败！') {
+      localStorage.removeItem('token')
+      location.href = '/login.html'
+        }
+  }
   })
